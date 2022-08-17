@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract TokenSwap {
-    //with my logic you have to get both swappers to approve this contract
-    //before the swap can  take place
     IERC20 token1;
     IERC20 token2;
     event TokenSwapped(string swapped);
@@ -49,6 +47,7 @@ contract TokenSwap {
         address to,
         uint256 amount
     ) private {
-        tokenToTransfer.transferFrom(from, to, amount);
+        bool sent = tokenToTransfer.transferFrom(from, to, amount);
+        require(sent, "Sorry swap failed");
     }
 }
