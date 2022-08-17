@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.0.0/contracts/token/ERC20/IERC20.sol";
 
 contract TokenSwap {
+    
     IERC20 token1;
     IERC20 token2;
+    event TokenSwapped(string swapped);
 
     constructor(IERC20 _token1, IERC20 _token2) {
         token1 = IERC20(_token1);
-        token1 = IERC20(_token2);
+        token2 = IERC20(_token2);
     }
 
-    // struct Transaction {
+    // struct Transaction{
     //     IERC20 token;
-    //     uint256 amountToSend;
-    //     uint256 deadline;
-    //     uint256 amountToReceive;
+    //     uint amountToSend;
+    //     uint deadline;
+    //     uint amountToReceive;
     // }
 
     //swap function
@@ -25,7 +27,7 @@ contract TokenSwap {
         address owner2,
         uint256 amount1,
         uint256 amount2
-    ) internal {
+    ) external {
         require(
             token1.allowance(owner1, address(this)) >= amount1,
             "Allowance for token one too low"
@@ -36,6 +38,8 @@ contract TokenSwap {
         );
         transferToken(token1, owner1, owner2, amount1);
         transferToken(token2, owner2, owner1, amount2);
+
+        emit TokenSwapped("Token swapped");
     }
 
     function transferToken(
