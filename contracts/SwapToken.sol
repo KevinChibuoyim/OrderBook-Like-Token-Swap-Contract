@@ -23,7 +23,7 @@ contract TokenSwap {
     // }
 
     //swap function
-    //with my logic, both swappers would have to approve the Swap Contract with openzeppelin "approve" function before a swap can take place.
+    //with my logic, both swappers would have to approve the Swap Contract with ERC20 "approve" function before a swap can take place.
     function swapToken(
         address owner1,
         address owner2,
